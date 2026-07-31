@@ -1,0 +1,14 @@
+.venv/
+venv/
+ENV/
+
+__pycache__/
+*.pyc
+
+data/
+runs/
+*.pt
+*.zip
+
+.idea/
+.vscode/
