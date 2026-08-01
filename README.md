@@ -15,7 +15,10 @@ This project is a computer vision pipeline to detect safety helmets in construct
 ## 📌 Phase 2: Data Understanding
 
 * **Source:** Hard Hat Workers dataset from Roboflow Universe (v11 - Augmented 3x).
-* **Classes:** 3 distinct classes (`head`, `helmet`, `person`).
+* **Classes:** 3 target classes:
+  1. `head` (Unprotected head)
+  2. `helmet` (Safety helmet worn)
+  3. `person` (Worker detected)
 * **Exploration:** Checked dataset multi-class annotations ensuring balanced sample distribution across safety helmets and unprotected heads.
 
 ---
@@ -25,3 +28,14 @@ This project is a computer vision pipeline to detect safety helmets in construct
 * **Preprocessing & Augmentation:** Images resized to 640x640 with 3x data augmentation for orientation, brightness, and positioning robustness.
 * **Structure:** Train, Validation, and Test splits cleanly organized.
 * **Configuration:** Finalized `data/data.yaml` with 3 target classes for YOLOv11 architecture.
+
+---
+
+## 📌 Phase 4: Modeling
+* **Architecture:** YOLO11 Nano (`yolo11n.pt`) pre-trained backbone.
+* **Pipeline:** Encapsulated training module inside `src/train.py`.
+* **Hyperparameters:**
+  * Image Resolution: $640 \times 640$
+  * Batch Size: 16
+  * Epochs: 15
+* **Execution Strategy:** Scalable training pipeline utilizing Google Colab GPU (T4) infrastructure.
