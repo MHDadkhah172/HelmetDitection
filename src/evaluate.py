@@ -36,6 +36,8 @@ def evaluate_model():
 
     for i, c in enumerate(class_indices):
         class_name = names[c]
+        if 'person' in class_name.lower():
+            continue
         instances = int(nt_per_class[c])
         p = metrics.box.p[i]
         r = metrics.box.r[i]
