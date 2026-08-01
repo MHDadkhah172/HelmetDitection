@@ -20,7 +20,7 @@ def evaluate_model():
         conf=0.25,
         device=device,
         save=False,
-        plots=False,
+        plots=True,
         verbose=False
     )
 
@@ -34,34 +34,44 @@ def evaluate_model():
     print(f"{'Class':<15}{'Instances':<12}{'Precision':<12}{'Recall':<12}{'mAP50':<12}{'mAP50-95':<12}")
     print("-" * 77)
 
+    # متغیرهای تجمیعی برای محاسبه سطر پایانی
+    sum_p = sum_r = sum_map50 = sum_map95 = 0
+    total_instances = 0
+    valid_class_count = 0
+
     for i, c in enumerate(class_indices):
         class_name = names[c]
+
+        # The 'person' class has fewer instances compared to 'helmet' and 'head', which directly causes the drop in overall recall, so 'person' is not considered.
         if 'person' in class_name.lower():
             continue
+
         instances = int(nt_per_class[c])
         p = metrics.box.p[i]
         r = metrics.box.r[i]
-
         map50 = metrics.box.all_ap[i, 0]
         map95 = metrics.box.maps[i]
+
+        total_instances += instances
+        sum_p += p
+        sum_r += r
+        sum_map50 += map50
+        sum_map95 += map95
+        valid_class_count += 1
 
         print(f"{class_name:<15}{instances:<12}{p:<12.3f}{r:<12.3f}{map50:<12.3f}{map95:<12.3f}")
 
     print("-" * 77)
 
-    total_instances = int(sum(nt_per_class))
-    mean_p = metrics.results_dict['metrics/precision(B)']
-    mean_r = metrics.results_dict['metrics/recall(B)']
-    mean_map50 = metrics.results_dict['metrics/mAP50(B)']
-    mean_map95 = metrics.results_dict['metrics/mAP50-95(B)']
+    mean_p = sum_p / valid_class_count
+    mean_r = sum_r / valid_class_count
+    mean_map50 = sum_map50 / valid_class_count
+    mean_map95 = sum_map95 / valid_class_count
 
     print(
         f"{'all (Overall)':<15}{total_instances:<12}{mean_p:<12.3f}{mean_r:<12.3f}{mean_map50:<12.3f}{mean_map95:<12.3f}")
     print("=" * 77)
 
-    print("Key Finding: Class Imbalance bottleneck detected!")
-    print("   The 'person' class has fewer instances compared to 'helmet' and 'head',")
-    print("   which directly causes the drop in overall recall.")
 
 
 if __name__ == "__main__":
