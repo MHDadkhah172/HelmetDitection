@@ -11,3 +11,17 @@ This project is a computer vision pipeline to detect safety helmets in construct
 * **Target Metric:** Achieve a reliable **mAP@0.5 (>80%)** for helmet detection to use in real-time safety monitoring.
 
 ---
+
+## 📌 Phase 2: Data Understanding
+
+* **Source:** Hard Hat Workers dataset from Roboflow Universe (v11 - Augmented 3x).
+* **Classes:** 3 distinct classes (`head`, `helmet`, `person`).
+* **Exploration:** Checked dataset multi-class annotations ensuring balanced sample distribution across safety helmets and unprotected heads.
+
+---
+
+## 📌 Phase 3: Data Preparation
+
+* **Preprocessing & Augmentation:** Images resized to 640x640 with 3x data augmentation for orientation, brightness, and positioning robustness.
+* **Structure:** Train, Validation, and Test splits cleanly organized.
+* **Configuration:** Finalized `data/data.yaml` with 3 target classes for YOLOv11 architecture.
