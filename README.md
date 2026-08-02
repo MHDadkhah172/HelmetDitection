@@ -2,6 +2,27 @@
 
 This project is a computer vision pipeline to detect safety helmets in construction sites and industrial working areas. The project follows the **CRISP-DM** framework step-by-step.
 
+
+---
+## 📁 Repository Structure
+```text
+├── data/
+│   ├── train/               # YOLOv11 formatted training dataset
+│   ├── valid/               # Validation dataset
+│   ├── test/                # Test split dataset for evaluate.py
+│   └── test_images/         # Unseen real-world images for inference
+│       └── result/          # Output images with plotted bounding boxes
+├── docs/
+│   └── images/              # Evaluation plots & confusion matrix
+├── models/
+│   └── best.pt              # Trained YOLOv11 model weights
+├── src/
+│   ├── train.py             # Model training script
+│   ├── evaluate.py          # Custom evaluation pipeline
+│   └── predict.py           # Real-world inference script
+├── requirements.txt         # Project dependencies
+└── README.md                # Project documentation
+```
 ---
 
 ## 📌 Phase 1: Business Understanding
@@ -80,8 +101,8 @@ When we filter out the under-represented `person` class and focus only on safety
 ### 📈 Key Takeaways
 
 1. **High Accuracy for Safety Objects (>94% mAP50):**
-   - The model is extremely good at detecting helmets and unhelmeted heads, making it completely reliable for safety inspection.
-   - Setting the confidence threshold to `0.25` gives the best balance between detecting all objects and avoiding false alarms.
+   - The model is extremely good at detecting helmets and unhelmeted heads, making it suitable for safety inspection.
+   - Setting the confidence threshold to `0.3` gives the best balance between detecting all objects and avoiding false alarms.
 
 2. **Accurate Bounding Boxes (mAP50-95 = 65.5%):**
    - A score over 65% shows that the model draws tight and accurate boxes around heads and helmets.
